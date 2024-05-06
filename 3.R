@@ -1,8 +1,8 @@
 install.packages("ggplot2")
-
+install.packages("dplyr")
 
 library(ggplot2)
-
+library(dplyr)
 
 current_script_directory <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(current_script_directory)
@@ -50,6 +50,9 @@ plot_dif <- ggplot() +
   geom_line(data = df_inflation, aes(x = year, y = index, color = "Inflacja"), linetype = "solid") +
   geom_line(data = df_salary_inc, aes(x = Rok, y = Procentowy_wzrost_zarobkow, color = "Procentowy wzrost zarobków"), linetype = "solid", size = 1.3) +
   geom_line(data = df_apartment_inc, aes(x = Rok, y = Procentowy_wzrost_cen, color = "Procentowy wzrost cen mieszkań"), linetype = "solid") +
+  geom_point(data = df_inflation, aes(x = year, y = index, color = "Inflacja")) +
+  geom_point(data = df_salary_inc, aes(x = Rok, y = Procentowy_wzrost_zarobkow, color = "Procentowy wzrost zarobków"), size = 1.3) +
+  geom_point(data = df_apartment_inc, aes(x = Rok, y = Procentowy_wzrost_cen, color = "Procentowy wzrost cen mieszkań")) +
   labs(x = "Rok", y = "Wartość", color = "Legenda: ", title = "Inflacja, wzrost cen mieszkań i zarobków w latach 1999-2023") +
   scale_color_manual(values = c("Inflacja" = "blue", "Procentowy wzrost zarobków" = "black", "Procentowy wzrost cen mieszkań" = "green")) +
   theme(legend.position = "top", plot.title = element_text(hjust = 0.5))
@@ -57,13 +60,15 @@ plot_dif <- ggplot() +
 
 plot_salary <- ggplot() +
   geom_line(data = df_real_salary_inc, aes(x = Rok, y = Rzeczywisty_wzrost_zarobkow, color = "Rzeczywisty wzrost zarobkow"), linetype = "solid") +
+  geom_point(data = df_real_salary_inc, aes(x = Rok, y = Rzeczywisty_wzrost_zarobkow, color = "Rzeczywisty wzrost zarobkow")) +
   labs(x = "Rok", y = "Wartość", title = "Rzeczywisty wzrost zarobkow") +
   scale_color_manual(values = c("Rzeczywisty wzrost zarobkow" = "black")) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
 
 
 plot_m <- ggplot() +
   geom_line(data = df_m_for_salary, aes(x = Rok, y = meters, color = "Metry kwadratowe za wynagrodzenie"), linetype = "solid") +
+  geom_point(data = df_m_for_salary, aes(x = Rok, y = meters, color = "Metry kwadratowe za wynagrodzenie")) +
   labs(x = "Rok", y = "Wartość", title = "Ile metrów kwadratowych mieszkania można kupić za miesięczne wynagrodzenie") +
   scale_color_manual(values = c("Metry kwadratowe za wynagrodzenie" = "black")) +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
